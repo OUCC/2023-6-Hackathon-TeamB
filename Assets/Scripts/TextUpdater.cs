@@ -14,40 +14,62 @@ public class TextUpdater : MonoBehaviour
     private Text messagec;
 
     public GameObject inputFieldB;
-    private InputField InputFieldc;
+    private InputField inputFieldc;
 
     // Start is called before the first frame update
     void Start()
     {
         namec = nameTextObject.GetComponent<Text>();
         messagec = messageTextObject.GetComponent<Text>();
-        InputFieldc = inputFieldB.GetComponent<InputField>();
+        inputFieldc = inputFieldB.GetComponent<InputField>();
 
         messagec.text = "Started";
     }
 
+    public List<MessageData> futureMessages = new List<MessageData>();
+
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    public void SetMessage(string author, string message)
-	{
-        namec.text = author;
-        messagec.text = message;
 
-        History.list.Add(new History.Data(author:author, message:message));
+    public void DisplayNextMessage()
+	{
+        if (futureMessages.Count == 0)
+            return;
+
+        MessageData md = futureMessages[0];
+        futureMessages.RemoveAt(0);
+
+        namec.text = md.author;
+        messagec.text = md.message;
+
+        History.list.Add(md);
+
+	}
+
+    public void SetMessage(MessageData md)
+	{
+        futureMessages.Add(md);
+	}
+    public void SetMessageList(List<MessageData> list)
+	{
+		foreach (var md in list)
+		{
+            futureMessages.Add(md);
+		}
 	}
 
     public void OnInputTextSubmit(string text)
 	{
-        SetMessage(author: "A", message: text);
+        SetMessage(new MessageData(author: "A", message: text));
 	}
     public void OnInputButtonClick()
 	{
 
-        SetMessage(author: "B", message: InputFieldc.text);
+        SetMessage(new MessageData(author: "B", message: inputFieldc.text));
 	}
 
     public void OnShowHistoryButton()

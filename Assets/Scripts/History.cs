@@ -5,26 +5,7 @@ using UnityEngine;
 public static class History
 {
 
-
-	public class Data
-	{
-		public Data(string author, string message)
-		{
-			this.author = author;
-			this.message = message;
-		}
-
-		public string author;
-		public string message;
-
-		override
-		public string ToString()
-		{
-			return author +"Åu"+ message +"Åv";
-		}
-	}
-
-	public static List<Data> list = new List<Data>();
+	public static List<MessageData> list = new List<MessageData>();
 
 
 	public static void PrintLog()
