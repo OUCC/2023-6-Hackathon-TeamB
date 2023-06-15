@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class TextUpdater : MonoBehaviour
 {
 
@@ -35,6 +36,8 @@ public class TextUpdater : MonoBehaviour
 	{
         namec.text = author;
         messagec.text = message;
+
+        History.list.Add(new History.Data(author:author, message:message));
 	}
 
     public void OnInputTextSubmit(string text)
@@ -45,6 +48,11 @@ public class TextUpdater : MonoBehaviour
 	{
 
         SetMessage(author: "B", message: InputFieldc.text);
+	}
+
+    public void OnShowHistoryButton()
+	{
+        History.PrintLog();
 	}
 
 }
