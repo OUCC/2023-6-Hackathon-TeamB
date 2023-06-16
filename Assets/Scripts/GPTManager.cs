@@ -117,8 +117,8 @@ public class ChatGPTResponseModel
                 var responseObject = JsonUtility.FromJson<ChatGPTResponseModel>(responseString);
 
                 Debug.Log("ChatGPT:" + responseObject.choices[0].message.content);
+                test = "ChatGPT:" + responseObject.choices[0].message.content;
                 
-                //ここでテキストオブジェクトに表示したいけど上手くいってないです
                 GameObject.Find("responceText").GetComponent<Responce_text>().responces(test);
                 GameObject.Find("systemText").GetComponent<System_text>().idol();
                 _messageList.Add(responseObject.choices[0].message);
