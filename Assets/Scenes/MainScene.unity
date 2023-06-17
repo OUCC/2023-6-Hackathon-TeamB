@@ -205,7 +205,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 29510641}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1858389108}
+        m_TargetAssemblyTypeName: TextUpdater, Assembly-CSharp
+        m_MethodName: OnHideInputFieldButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &29510641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -418,10 +430,10 @@ RectTransform:
   m_Children:
   - {fileID: 948526231}
   - {fileID: 1558495684}
-  - {fileID: 356098754}
   - {fileID: 1356179168}
-  - {fileID: 1885682505}
+  - {fileID: 356098754}
   - {fileID: 1833572149}
+  - {fileID: 1885682505}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -583,7 +595,7 @@ RectTransform:
   m_Children:
   - {fileID: 1832219435}
   m_Father: {fileID: 276872845}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1321,7 +1333,7 @@ RectTransform:
   m_Children:
   - {fileID: 236499584}
   m_Father: {fileID: 276872845}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1993,18 +2005,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1833572148}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1788072470}
   m_Father: {fileID: 276872845}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 339.65, y: -219.43}
+  m_AnchoredPosition: {x: 339.65002, y: -219.43001}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1833572150
@@ -2132,8 +2144,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameTextObject: {fileID: 236499583}
   messageTextObject: {fileID: 1832219434}
+  InputScreen: {fileID: 1885682504}
+  autoMode: 0
+  autoTimeAfterFinish: 1
   textAnimSpeed: 10
-  inputFieldB: {fileID: 1733817321}
+  inputField: {fileID: 1733817321}
 --- !u!4 &1858389109
 Transform:
   m_ObjectHideFlags: 0
@@ -2183,7 +2198,7 @@ RectTransform:
   - {fileID: 29510639}
   - {fileID: 1423169822}
   m_Father: {fileID: 276872845}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2272,7 +2287,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2123789125}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1858389108}
+        m_TargetAssemblyTypeName: TextUpdater, Assembly-CSharp
+        m_MethodName: ToggleAutoMode
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2123789125
 MonoBehaviour:
   m_ObjectHideFlags: 0

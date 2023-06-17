@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class TextUpdater : MonoBehaviour
+public class MessageManager : MonoBehaviour
 {
 
     public GameObject nameTextObject;
@@ -13,6 +13,7 @@ public class TextUpdater : MonoBehaviour
 
     private Text namec;
     private Text messagec;
+    private LogManager logManager;
 
     // Auto用
     public bool autoMode;
@@ -38,10 +39,21 @@ public class TextUpdater : MonoBehaviour
         // コンポーネント取得
         namec = nameTextObject.GetComponent<Text>();
         messagec = messageTextObject.GetComponent<Text>();
+        logManager = transform.GetComponent<LogManager>();
 
         inputFieldc = inputField.GetComponent<InputField>();
 
         // デバッグ用のメッセージ
+        futureMessages.Add(new MessageData("A", "aaa"));
+        futureMessages.Add(new MessageData("B", "bbbbbbb"));
+        futureMessages.Add(new MessageData("C", "ccccccccccccccc"));
+        futureMessages.Add(new MessageData("D", "dddddddddddddddddddddd"));
+        futureMessages.Add(new MessageData("E", "eeeeeeeeeeeeeeeeeeeeeeeeeeeee"));
+        futureMessages.Add(new MessageData("A", "aaa"));
+        futureMessages.Add(new MessageData("B", "bbbbbbb"));
+        futureMessages.Add(new MessageData("C", "ccccccccccccccc"));
+        futureMessages.Add(new MessageData("D", "dddddddddddddddddddddd"));
+        futureMessages.Add(new MessageData("E", "eeeeeeeeeeeeeeeeeeeeeeeeeeeee"));
         futureMessages.Add(new MessageData("A", "aaa"));
         futureMessages.Add(new MessageData("B", "bbbbbbb"));
         futureMessages.Add(new MessageData("C", "ccccccccccccccc"));
@@ -100,6 +112,7 @@ public class TextUpdater : MonoBehaviour
         fullMessage = md.message;
         //履歴に追加
         History.list.Add(md);
+        logManager.Add(md);
 	}
 
     public void SetMessage(MessageData md)
