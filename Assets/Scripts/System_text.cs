@@ -19,17 +19,17 @@ public class System_text : MonoBehaviour
     {
         //var envs = Environment.GetEnvironmentVariables();
         //systemText = GetComponent<TextMeshProUGUI>();
-        //systemText.text = "‚É‚ã‚¤‚è‚å‚­‚µ‚Ä‚¢‚¢‚æ";
-        legacySystemText.text = "‚É‚ã‚¤‚è‚å‚­‚µ‚Ä‚¢‚¢‚æ";
+        //systemText.text = "ï¿½É‚ã‚¤ï¿½ï¿½å‚­ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½";
+        legacySystemText.text = "ï¿½É‚ã‚¤ï¿½ï¿½å‚­ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½";
         api_key = Environment.GetEnvironmentVariable("API_key", EnvironmentVariableTarget.User);
         
     }
     
     public void OnEndEdit()
     {
-        //systemText.text = "‚¿‚å‚Á‚Æ‚Ü‚Á‚Ä‚Ë";
+        //systemText.text = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚Ü‚ï¿½ï¿½Ä‚ï¿½";
         //string input = Field.GetComponent<TMP_InputField>().text;
-        legacySystemText.text = "‚¿‚å‚Á‚Æ‚Ü‚Á‚Ä‚Ë";
+        legacySystemText.text = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚Ü‚ï¿½ï¿½Ä‚ï¿½";
         string input = legacyField.GetComponent<InputField>().text;
 
         var chatGPTConnection = new ChatGPTConnection(api_key);
@@ -37,8 +37,8 @@ public class System_text : MonoBehaviour
     }
     public void idol()
     {
-        //systemText.text = "‚É‚ã‚¤‚è‚å‚­‚µ‚Ä‚¢‚¢‚æ";
-        legacySystemText.text = "‚É‚ã‚¤‚è‚å‚­‚µ‚Ä‚¢‚¢‚æ";
+        //systemText.text = "ï¿½É‚ã‚¤ï¿½ï¿½å‚­ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½";
+        legacySystemText.text = "ï¿½É‚ã‚¤ï¿½ï¿½å‚­ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½";
     }
    
 }

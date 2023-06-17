@@ -14,7 +14,7 @@ public class ChatGPTMessageModel
 
 }
 
-//ChatGPT API‚ÉRequest‚ğ‘—‚é‚½‚ß‚ÌJSON—pƒNƒ‰ƒX
+//ChatGPT APIï¿½ï¿½Requestï¿½ğ‘—‚é‚½ï¿½ß‚ï¿½JSONï¿½pï¿½Nï¿½ï¿½ï¿½X
 [Serializable]
 public class ChatGPTCompletionRequestModel
 {
@@ -22,7 +22,7 @@ public class ChatGPTCompletionRequestModel
     public List<ChatGPTMessageModel> messages;
 }
 
-//ChatGPT API‚©‚ç‚ÌResponse‚ğó‚¯æ‚é‚½‚ß‚ÌƒNƒ‰ƒX
+//ChatGPT APIï¿½ï¿½ï¿½ï¿½ï¿½Responseï¿½ï¿½ï¿½ó‚¯ï¿½é‚½ï¿½ß‚ÌƒNï¿½ï¿½ï¿½X
 [System.Serializable]
 public class ChatGPTResponseModel
 {
@@ -55,7 +55,7 @@ public class ChatGPTResponseModel
     {
         //Text text;
         private readonly string _apiKey;
-        //‰ï˜b—š—ğ‚ğ•Û‚·‚éƒŠƒXƒg
+        //ï¿½ï¿½bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ûï¿½ï¿½ï¿½ï¿½éƒŠï¿½Xï¿½g
         private readonly List<ChatGPTMessageModel> _messageList = new();
         
         string test;
@@ -63,17 +63,17 @@ public class ChatGPTResponseModel
         {
             _apiKey = apiKey;
             _messageList.Add(
-                new ChatGPTMessageModel() { role = "system", content = "Œê”ö‚É‚í‚ñ‚ğ‚Â‚¯‚Ä‚­‚¾‚³‚¢" });
+                new ChatGPTMessageModel() { role = "system", content = "ï¿½ï¿½ï¿½ï¿½É‚ï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" });
         }
 
         public async UniTask<ChatGPTResponseModel> RequestAsync(string userMessage)
         {
-            //•¶Í¶¬AI‚ÌAPI‚ÌƒGƒ“ƒhƒ|ƒCƒ“ƒg‚ğİ’è
+            //ï¿½ï¿½ï¿½Íï¿½ï¿½ï¿½AIï¿½ï¿½APIï¿½ÌƒGï¿½ï¿½ï¿½hï¿½|ï¿½Cï¿½ï¿½ï¿½gï¿½ï¿½İ’ï¿½
             var apiUrl = "https://api.openai.com/v1/chat/completions";
 
             _messageList.Add(new ChatGPTMessageModel { role = "user", content = userMessage });
 
-            //OpenAI‚ÌAPIƒŠƒNƒGƒXƒg‚É•K—v‚Èƒwƒbƒ_[î•ñ‚ğİ’è
+            //OpenAIï¿½ï¿½APIï¿½ï¿½ï¿½Nï¿½Gï¿½Xï¿½gï¿½É•Kï¿½vï¿½Èƒwï¿½bï¿½_ï¿½[ï¿½ï¿½ï¿½ï¿½İ’ï¿½
             var headers = new Dictionary<string, string>
             {
                 {"Authorization", "Bearer " + _apiKey},
@@ -81,7 +81,7 @@ public class ChatGPTResponseModel
                 {"X-Slack-No-Retry", "1"}
             };
 
-            //•¶Í¶¬‚Å—˜—p‚·‚éƒ‚ƒfƒ‹‚âƒg[ƒNƒ“ãŒÀAƒvƒƒ“ƒvƒg‚ğƒIƒvƒVƒ‡ƒ“‚Éİ’è
+            //ï¿½ï¿½ï¿½Íï¿½ï¿½ï¿½ï¿½Å—ï¿½ï¿½pï¿½ï¿½ï¿½éƒ‚ï¿½fï¿½ï¿½ï¿½ï¿½gï¿½[ï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½vï¿½ï¿½ï¿½ï¿½ï¿½vï¿½gï¿½ï¿½ï¿½Iï¿½vï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Éİ’ï¿½
             var options = new ChatGPTCompletionRequestModel()
             {
                 model = "gpt-3.5-turbo",
@@ -89,9 +89,9 @@ public class ChatGPTResponseModel
             };
             var jsonOptions = JsonUtility.ToJson(options);
 
-            Debug.Log("©•ª:" + userMessage);
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½:" + userMessage);
 
-            //OpenAI‚Ì•¶Í¶¬(Completion)‚ÉAPIƒŠƒNƒGƒXƒg‚ğ‘—‚èAŒ‹‰Ê‚ğ•Ï”‚ÉŠi”[
+            //OpenAIï¿½Ì•ï¿½ï¿½Íï¿½ï¿½ï¿½(Completion)ï¿½ï¿½APIï¿½ï¿½ï¿½Nï¿½Gï¿½Xï¿½gï¿½ğ‘—‚ï¿½Aï¿½ï¿½ï¿½Ê‚ï¿½Ïï¿½ï¿½ÉŠiï¿½[
             using var request = new UnityWebRequest(apiUrl, "POST")
             {
                 uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(jsonOptions)),
