@@ -33,7 +33,7 @@ public class ChatGPTResponseModel
     public Usage usage;
 
 
-    [   System.Serializable]
+    [ System.Serializable]
     public class Choice
     {
         public int index;
@@ -55,15 +55,17 @@ public class ChatGPTResponseModel
     {
         //Text text;
         private readonly string _apiKey;
-        //��b������ێ����郊�X�g
-        private readonly List<ChatGPTMessageModel> _messageList = new();
-        
+    public List<ChatGPTMessageModel> _messageList = new();
+
+
         string test;
+        
         public ChatGPTConnection(string apiKey)
         {
+            
             _apiKey = apiKey;
             _messageList.Add(
-                new ChatGPTMessageModel() { role = "system", content = "����ɂ������Ă�������" });
+                new ChatGPTMessageModel() { role = "system", content = "語尾に「にゃ」をつけて" });
         }
 
         public async UniTask<ChatGPTResponseModel> RequestAsync(string userMessage)
@@ -89,7 +91,7 @@ public class ChatGPTResponseModel
             };
             var jsonOptions = JsonUtility.ToJson(options);
 
-            Debug.Log("����:" + userMessage);
+            Debug.Log("自分:" + userMessage);
 
             //OpenAI�̕��͐���(Completion)��API���N�G�X�g�𑗂�A���ʂ�ϐ��Ɋi�[
             using var request = new UnityWebRequest(apiUrl, "POST")
@@ -126,6 +128,7 @@ public class ChatGPTResponseModel
                 //GameObject.Find("responceText").GetComponent<Responce_text>().responces(test);
                 GameObject.Find("systemText").GetComponent<System_text>().idol();
                 _messageList.Add(responseObject.choices[0].message);
+                
                 return responseObject;
             }
         }

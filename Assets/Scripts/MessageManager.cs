@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+using Microsoft.Win32;
 
 
 public class MessageManager : MonoBehaviour
@@ -26,6 +28,11 @@ public class MessageManager : MonoBehaviour
     public float textAnimSpeed = 10;
     private bool isEndTextAnim = false;
 
+    //apikey
+    string api_key;
+
+    //
+    ChatGPTConnection chatGPTConnection;
     //デバッグ用
     public GameObject inputField;
     private InputField inputFieldc;
@@ -48,17 +55,10 @@ public class MessageManager : MonoBehaviour
         futureMessages.Add(new MessageData("B", "bbbbbbb"));
         futureMessages.Add(new MessageData("C", "ccccccccccccccc"));
         futureMessages.Add(new MessageData("D", "dddddddddddddddddddddd"));
-        futureMessages.Add(new MessageData("E", "eeeeeeeeeeeeeeeeeeeeeeeeeeeee"));
-        futureMessages.Add(new MessageData("A", "aaa"));
-        futureMessages.Add(new MessageData("B", "bbbbbbb"));
-        futureMessages.Add(new MessageData("C", "ccccccccccccccc"));
-        futureMessages.Add(new MessageData("D", "dddddddddddddddddddddd"));
-        futureMessages.Add(new MessageData("E", "eeeeeeeeeeeeeeeeeeeeeeeeeeeee"));
-        futureMessages.Add(new MessageData("A", "aaa"));
-        futureMessages.Add(new MessageData("B", "bbbbbbb"));
-        futureMessages.Add(new MessageData("C", "ccccccccccccccc"));
-        futureMessages.Add(new MessageData("D", "dddddddddddddddddddddd"));
-        futureMessages.Add(new MessageData("E", "eeeeeeeeeeeeeeeeeeeeeeeeeeeee"));
+       
+        //環境変数読み出し
+        api_key = Environment.GetEnvironmentVariable("API_key", EnvironmentVariableTarget.User);
+        chatGPTConnection = new ChatGPTConnection(api_key);
 
     }
 
@@ -134,7 +134,9 @@ public class MessageManager : MonoBehaviour
         SetMessage(new MessageData(author: "B", message: inputFieldc.text));
 
         // ここで inputField.text をChatGPTに送る
-	}
+       
+        chatGPTConnection.RequestAsync(inputFieldc.text);
+    }
 
     public void OnShowHistoryButton()
 	{
