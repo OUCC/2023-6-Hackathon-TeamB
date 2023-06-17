@@ -39,7 +39,7 @@ public class MessageManager : MonoBehaviour
         // コンポーネント取得
         namec = nameTextObject.GetComponent<Text>();
         messagec = messageTextObject.GetComponent<Text>();
-        logManager = transform.GetComponent<LogManager>();
+        //logManager = transform.GetComponent<LogManager>();
 
         inputFieldc = inputField.GetComponent<InputField>();
 
@@ -112,7 +112,7 @@ public class MessageManager : MonoBehaviour
         fullMessage = md.message;
         //履歴に追加
         History.list.Add(md);
-        logManager.Add(md);
+        //logManager.Add(md);
 	}
 
     public void SetMessage(MessageData md)
