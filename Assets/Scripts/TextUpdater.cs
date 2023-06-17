@@ -9,17 +9,24 @@ public class TextUpdater : MonoBehaviour
 
     public GameObject nameTextObject;
     public GameObject messageTextObject;
+    public GameObject InputScreen;
 
     private Text namec;
     private Text messagec;
+
+    // Auto用
+    public bool autoMode;
+    private float autoTimer;
+    public float autoTimeAfterFinish = 1;
 
     // 順番に出現するテキストのアニメーション用
     private string fullMessage = "";
     private float textAnimTimer;
     public float textAnimSpeed = 10;
+    private bool isEndTextAnim = false;
 
     //デバッグ用
-    public GameObject inputFieldB;
+    public GameObject inputField;
     private InputField inputFieldc;
 
     // 次以降に表示するメッセージ
@@ -32,7 +39,7 @@ public class TextUpdater : MonoBehaviour
         namec = nameTextObject.GetComponent<Text>();
         messagec = messageTextObject.GetComponent<Text>();
 
-        inputFieldc = inputFieldB.GetComponent<InputField>();
+        inputFieldc = inputField.GetComponent<InputField>();
 
         // デバッグ用のメッセージ
         futureMessages.Add(new MessageData("A", "aaa"));
@@ -47,16 +54,32 @@ public class TextUpdater : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // テキストのアニメーション完了したらAutoのタイマー稼働
+		if (isEndTextAnim & autoMode)
+		{
+            autoTimer += Time.deltaTime;
+            if(autoTimer > autoTimeAfterFinish)
+			{
+                autoTimer = 0;
+                DisplayNextMessage();
+			}
+        }
+
         // テキストを一文字ずつ順番に表示させる
-        textAnimTimer += Time.deltaTime;
-        messagec.text = fullMessage.Substring(0,Mathf.Min(fullMessage.Length, Mathf.FloorToInt(textAnimTimer * textAnimSpeed)));
+        if(!isEndTextAnim)
+		{
+            textAnimTimer += Time.deltaTime;
+            int dispTextNum = Mathf.FloorToInt(textAnimTimer * textAnimSpeed);
+            messagec.text = fullMessage.Substring(0, Mathf.Min(fullMessage.Length, dispTextNum));
+            isEndTextAnim = fullMessage.Length < dispTextNum;
+        }
     }
 
 
     public void DisplayNextMessage()
 	{
         //まだアニメーション中なら表示を完了する
-        if(fullMessage.Length > Mathf.FloorToInt(textAnimTimer * textAnimSpeed))
+        if(! isEndTextAnim)
 		{
             textAnimTimer = fullMessage.Length * textAnimSpeed;
             return;
@@ -69,6 +92,7 @@ public class TextUpdater : MonoBehaviour
         //新しいメッセージに変更
 
         textAnimTimer = 0;
+        isEndTextAnim = false;
         //次のメッセージをリストから取り出して更新
         MessageData md = futureMessages[0];
         futureMessages.RemoveAt(0);
@@ -90,10 +114,6 @@ public class TextUpdater : MonoBehaviour
 		}
 	}
 
-    public void OnInputTextSubmit(string text)
-	{
-        SetMessage(new MessageData(author: "A", message: text));
-	}
     public void OnInputButtonClick()
 	{
 
@@ -105,4 +125,16 @@ public class TextUpdater : MonoBehaviour
         History.PrintLog();
 	}
 
+    public void OnHideInputFieldButtonClick()
+	{
+        InputScreen.SetActive(false);
+	}
+    public void OnShowInputFieldButtonClick()
+	{
+        InputScreen.SetActive(true);
+	}
+    public void ToggleAutoMode()
+	{
+        autoMode ^= true;
+	}
 }
