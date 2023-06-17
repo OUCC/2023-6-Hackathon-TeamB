@@ -129,8 +129,11 @@ public class MessageManager : MonoBehaviour
 
     public void OnInputButtonClick()
 	{
+        // “ü—Í‚ÌŒˆ’èƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚çŒÄ‚Î‚ê‚é
 
         SetMessage(new MessageData(author: "B", message: inputFieldc.text));
+
+        // ‚±‚±‚Å inputField.text ‚ðChatGPT‚É‘—‚é
 	}
 
     public void OnShowHistoryButton()

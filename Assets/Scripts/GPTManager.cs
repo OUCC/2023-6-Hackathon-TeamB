@@ -119,6 +119,7 @@ public class ChatGPTResponseModel
                 Debug.Log("ChatGPT:" + responseObject.choices[0].message.content);
                 test = "ChatGPT:" + responseObject.choices[0].message.content;
 
+                // 返答を これから表示するリスト に追加する
                 GameObject.Find("TextManager").GetComponent<MessageManager>().futureMessages
                     .Add(new MessageData(author:"ChatGPT",message:responseObject.choices[0].message.content));
 

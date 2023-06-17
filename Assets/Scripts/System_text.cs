@@ -20,7 +20,7 @@ public class System_text : MonoBehaviour
         //var envs = Environment.GetEnvironmentVariables();
         //systemText = GetComponent<TextMeshProUGUI>();
         //systemText.text = "�ɂイ��傭���Ă�����";
-        legacySystemText.text = "�ɂイ��傭���Ă�����";
+        legacySystemText.text = "にゅうりょくしていいよ";
         api_key = Environment.GetEnvironmentVariable("API_key", EnvironmentVariableTarget.User);
         
     }
@@ -29,7 +29,7 @@ public class System_text : MonoBehaviour
     {
         //systemText.text = "������Ƃ܂��Ă�";
         //string input = Field.GetComponent<TMP_InputField>().text;
-        legacySystemText.text = "������Ƃ܂��Ă�";
+        legacySystemText.text = "ちょっとまってね";
         string input = legacyField.GetComponent<InputField>().text;
 
         var chatGPTConnection = new ChatGPTConnection(api_key);
@@ -38,7 +38,7 @@ public class System_text : MonoBehaviour
     public void idol()
     {
         //systemText.text = "�ɂイ��傭���Ă�����";
-        legacySystemText.text = "�ɂイ��傭���Ă�����";
+        legacySystemText.text = "にゅうりょくしていいよ";
     }
    
 }
