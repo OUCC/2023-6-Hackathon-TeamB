@@ -59,7 +59,8 @@ public class MessageManager : MonoBehaviour
         //ŠÂ‹«•Ï”“Ç‚İo‚µ
         api_key = Environment.GetEnvironmentVariable("API_key", EnvironmentVariableTarget.User);
         chatGPTConnection = new ChatGPTConnection(api_key);
-
+        //Œê‚è‚¾‚µ‚ğæ‚ÉŒê‚ç‚¹‚é
+        chatGPTConnection.RequestAsync("Œê‚è‚¾‚µ‚ğŒê‚Á‚Ä‚­‚¾‚³‚¢");
     }
 
 

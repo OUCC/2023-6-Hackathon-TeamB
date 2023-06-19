@@ -65,7 +65,9 @@ public class ChatGPTResponseModel
             
             _apiKey = apiKey;
             _messageList.Add(
-                new ChatGPTMessageModel() { role = "system", content = "語尾に「にゃ」をつけて" });
+                new ChatGPTMessageModel() { role = "system", content = "あなたは物語の語り手です。「"+ TitleSingleton.Instance.title+"」という作品を創作し、語りだしを語ってください。また、次の条件を守ってください。" +
+                "条件１：会話ごとに相手に選択をゆだねてください。" +
+                "条件２：相手の返答によって物語に変化を加えてください。" });
         }
 
         public async UniTask<ChatGPTResponseModel> RequestAsync(string userMessage)
