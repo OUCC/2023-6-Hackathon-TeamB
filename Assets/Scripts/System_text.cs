@@ -8,11 +8,9 @@ using Microsoft.Win32;
 
 public class System_text : MonoBehaviour
 {
-    public TMP_InputField Field;
-    public InputField legacyField;
-    [SerializeField]
-    private TextMeshProUGUI systemText;
+    public InputField legacyField;  
     public Text legacySystemText;
+<<<<<<< Updated upstream
     string api_key;
     
 
@@ -24,6 +22,16 @@ public class System_text : MonoBehaviour
         legacySystemText.text = "にゅうりょくしていいよ";
         
         
+=======
+    //load用のクラス　他のに統合できそうな気もする
+    Loading loading;
+
+    void Start()
+    {
+        loading = GameObject.Find("LoadingCanvas").GetComponent<Loading>();
+        legacySystemText.text = "にゅうりょくしていいよ";
+               
+>>>>>>> Stashed changes
     }
     
     public void OnEndEdit()
@@ -34,7 +42,8 @@ public class System_text : MonoBehaviour
     }
     public void idol()
     {
-        //systemText.text = "�ɂイ��傭���Ă�����";
+        //load終了
+        loading.Finish_load();
         legacySystemText.text = "にゅうりょくしていいよ";
     }
    

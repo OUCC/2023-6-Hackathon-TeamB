@@ -38,4 +38,12 @@ public class TitleSingleton : MonoBehaviour
             SceneManager.LoadScene("MainScene");
         }
     }
+<<<<<<< Updated upstream
+=======
+    public void SceneLoader()
+    {
+        title = InputField_title.text;
+        SceneManager.LoadScene("MainScene");
+    }
+>>>>>>> Stashed changes
 }

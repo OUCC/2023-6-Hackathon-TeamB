@@ -30,8 +30,14 @@ public class MessageManager : MonoBehaviour
 
     //apikey
     string api_key;
+<<<<<<< Updated upstream
 
     //
+=======
+    //loading画面用
+    Loading loading;
+    
+>>>>>>> Stashed changes
     ChatGPTConnection chatGPTConnection;
     //デバッグ用
     public GameObject inputField;
@@ -43,6 +49,7 @@ public class MessageManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        loading = GameObject.Find("LoadingCanvas").GetComponent<Loading>();
         // コンポーネント取得
         namec = nameTextObject.GetComponent<Text>();
         messagec = messageTextObject.GetComponent<Text>();
@@ -61,6 +68,11 @@ public class MessageManager : MonoBehaviour
         chatGPTConnection = new ChatGPTConnection(api_key);
         //語りだしを先に語らせる
         chatGPTConnection.RequestAsync("語りだしを語ってください");
+<<<<<<< Updated upstream
+=======
+        //load開始
+        loading.Start_load();
+>>>>>>> Stashed changes
     }
 
 
@@ -133,10 +145,14 @@ public class MessageManager : MonoBehaviour
         // 入力の決定ボタンが押されたら呼ばれる
 
         SetMessage(new MessageData(author: "B", message: inputFieldc.text));
-
+        
         // ここで inputField.text をChatGPTに送る
        
         chatGPTConnection.RequestAsync(inputFieldc.text);
+<<<<<<< Updated upstream
+=======
+        loading.Start_load();
+>>>>>>> Stashed changes
     }
 
     public void OnShowHistoryButton()

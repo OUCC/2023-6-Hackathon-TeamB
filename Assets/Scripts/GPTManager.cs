@@ -55,19 +55,33 @@ public class ChatGPTResponseModel
     {
         //Text text;
         private readonly string _apiKey;
+<<<<<<< Updated upstream
     public List<ChatGPTMessageModel> _messageList = new();
 
 
         string test;
+=======
+        public List<ChatGPTMessageModel> _messageList = new();
+        
+
+       
+>>>>>>> Stashed changes
         
         public ChatGPTConnection(string apiKey)
         {
             
             _apiKey = apiKey;
             _messageList.Add(
+<<<<<<< Updated upstream
                 new ChatGPTMessageModel() { role = "system", content = "あなたは物語の語り手です。「"+ TitleSingleton.Instance.title+"」という作品を創作し、語りだしを語ってください。また、次の条件を守ってください。" +
                 "条件１：会話ごとに相手に選択をゆだねてください。" +
                 "条件２：相手の返答によって物語に変化を加えてください。" });
+=======
+                new ChatGPTMessageModel() { role = "system", content = "あなたは物語の語り手です。「"+ TitleSingleton.Instance.title+"」という作品を創作し、語ってください。また、次の条件を守ってください。" +
+                "条件１：会話ごとに相手に選択をゆだねてください。" +
+                "条件２：相手の返答によって物語に変化を加えてください。" });
+            
+>>>>>>> Stashed changes
         }
 
         public async UniTask<ChatGPTResponseModel> RequestAsync(string userMessage)
@@ -121,13 +135,12 @@ public class ChatGPTResponseModel
                 var responseObject = JsonUtility.FromJson<ChatGPTResponseModel>(responseString);
 
                 Debug.Log("ChatGPT:" + responseObject.choices[0].message.content);
-                test = "ChatGPT:" + responseObject.choices[0].message.content;
-
-                // 返答を これから表示するリスト に追加する
-                GameObject.Find("TextManager").GetComponent<MessageManager>().futureMessages
+            
+            // 返答を これから表示するリスト に追加する
+            GameObject.Find("TextManager").GetComponent<MessageManager>().futureMessages
                     .Add(new MessageData(author:"ChatGPT",message:responseObject.choices[0].message.content));
 
-                //GameObject.Find("responceText").GetComponent<Responce_text>().responces(test);
+                
                 GameObject.Find("systemText").GetComponent<System_text>().idol();
                 _messageList.Add(responseObject.choices[0].message);
                 
