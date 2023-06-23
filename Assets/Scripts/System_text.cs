@@ -8,36 +8,28 @@ using Microsoft.Win32;
 
 public class System_text : MonoBehaviour
 {
-    public TMP_InputField Field;
-    public InputField legacyField;
-    [SerializeField]
-    private TextMeshProUGUI systemText;
+    public InputField legacyField;  
     public Text legacySystemText;
-    string api_key;
+    //load用のクラス　他のに統合できそうな気もする
+    Loading loading;
 
     void Start()
     {
-        //var envs = Environment.GetEnvironmentVariables();
-        //systemText = GetComponent<TextMeshProUGUI>();
-        //systemText.text = "�ɂイ��傭���Ă�����";
+        loading = GameObject.Find("LoadingCanvas").GetComponent<Loading>();
         legacySystemText.text = "にゅうりょくしていいよ";
-        api_key = Environment.GetEnvironmentVariable("API_key", EnvironmentVariableTarget.User);
-        
+               
     }
     
     public void OnEndEdit()
     {
-        //systemText.text = "������Ƃ܂��Ă�";
-        //string input = Field.GetComponent<TMP_InputField>().text;
+        
         legacySystemText.text = "ちょっとまってね";
-        string input = legacyField.GetComponent<InputField>().text;
-
-        var chatGPTConnection = new ChatGPTConnection(api_key);
-        chatGPTConnection.RequestAsync(input);
+        
     }
     public void idol()
     {
-        //systemText.text = "�ɂイ��傭���Ă�����";
+        //load終了
+        loading.Finish_load();
         legacySystemText.text = "にゅうりょくしていいよ";
     }
    

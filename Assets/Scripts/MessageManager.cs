@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+using Microsoft.Win32;
 
 
 public class MessageManager : MonoBehaviour
@@ -17,28 +19,39 @@ public class MessageManager : MonoBehaviour
     private LogManager logManager;
     private Button inputButtonc;
 
-    // Autoç”¨
+    // Auto—p
     public bool autoMode;
     private float autoTimer;
     public float autoTimeAfterFinish = 1;
 
-    // é †ç•ªã«å‡ºç¾ã™ã‚‹ãƒ†ã‚­ã‚¹ãƒˆã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ç”¨
-    private string fullMessage = "ã“ã®ç¯„å›²ã‚’ã‚¯ãƒªãƒƒã‚¯ã™ã‚‹ã¨è¡¨ç¤ºãŒé€²ã¿ã¾ã™ã€‚";
+    // ‡”Ô‚ÉoŒ»‚·‚éƒeƒLƒXƒg‚ÌƒAƒjƒ[ƒVƒ‡ƒ“—p
+    private string fullMessage = "‚±‚Ì”ÍˆÍ‚ğƒNƒŠƒbƒN‚·‚é‚Æ•\¦‚ªi‚İ‚Ü‚·B";
     private float textAnimTimer;
     public float textAnimSpeed = 10;
     private bool isEndTextAnim = false;
 
-    //ãƒ‡ãƒãƒƒã‚°ç”¨
+    //ƒfƒoƒbƒO—p
+    
+    //apikey
+    string api_key;
+    //loading???p
+    Loading loading;
+    
+    ChatGPTConnection chatGPTConnection;
+    //?f?o?b?O?p
+    
     public GameObject inputField;
     private InputField inputFieldc;
 
-    // æ¬¡ä»¥é™ã«è¡¨ç¤ºã™ã‚‹ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
+    // ŸˆÈ~‚É•\¦‚·‚éƒƒbƒZ[ƒW
     public List<MessageData> futureMessages = new List<MessageData>();
 
     // Start is called before the first frame update
-    void Start()
+    async void Start()
     {
-        // ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆå–å¾—
+        // ƒRƒ“ƒ|[ƒlƒ“ƒgæ“¾
+        loading = GameObject.Find("LoadingCanvas").GetComponent<Loading>();
+        
         namec = nameTextObject.GetComponent<Text>();
         messagec = messageTextObject.GetComponent<Text>();
         logManager = transform.GetComponent<LogManager>();
@@ -46,24 +59,36 @@ public class MessageManager : MonoBehaviour
         inputFieldc = inputField.GetComponent<InputField>();
         inputButtonc = inputButton.GetComponent<Button>();
 
-        // ãƒ‡ãƒãƒƒã‚°ç”¨ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
-        futureMessages.Add(new MessageData("èª¬æ˜", "ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€â†‘\nAUTOãƒœã‚¿ãƒ³ã‚’ã‚¯ãƒªãƒƒã‚¯ã™ã‚‹ã¨AUTOãƒ¢ãƒ¼ãƒ‰ã«ãªã‚Šã€\nè¡¨ç¤ºã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³çµ‚äº†å¾Œ1ç§’ã§æ¬¡ã«ç§»ã‚Šã¾ã™ã€‚"));
-        futureMessages.Add(new MessageData("èª¬æ˜", "ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€ ã€€â†‘\nLOGãƒœã‚¿ãƒ³ã‚’ã‚¯ãƒªãƒƒã‚¯ã™ã‚‹ã¨ã“ã‚Œã¾ã§ã®ä¼šè©±ã®å±¥æ­´ãŒè¡¨ç¤ºã•ã‚Œã€å³ä¸Šã®âœ•ã§æˆ»ã‚Šã¾ã™ã€‚"));
+        // ƒfƒoƒbƒO—p‚ÌƒƒbƒZ[ƒW
+        futureMessages.Add(new MessageData("à–¾", "@@@@@@@@@@@@@@ª\nAUTOƒ{ƒ^ƒ“‚ğƒNƒŠƒbƒN‚·‚é‚ÆAUTOƒ‚[ƒh‚É‚È‚èA\n•\¦ƒAƒjƒ[ƒVƒ‡ƒ“I—¹Œã1•b‚ÅŸ‚ÉˆÚ‚è‚Ü‚·B"));
+        futureMessages.Add(new MessageData("à–¾", "@@@@@@@@@@@@@@@@@ª\nLOGƒ{ƒ^ƒ“‚ğƒNƒŠƒbƒN‚·‚é‚Æ‚±‚ê‚Ü‚Å‚Ì‰ï˜b‚Ì—š—ğ‚ª•\¦‚³‚êA‰Eã‚Ì?‚Å–ß‚è‚Ü‚·B"));
 
-
+        // ?f?o?b?O?p????b?Z?[?W
+        futureMessages.Add(new MessageData("A", "aaa"));
+        futureMessages.Add(new MessageData("B", "bbbbbbb"));
+        futureMessages.Add(new MessageData("C", "ccccccccccccccc"));
+        futureMessages.Add(new MessageData("D", "dddddddddddddddddddddd"));
+       
+        //?????????o??
+        api_key = Environment.GetEnvironmentVariable("API_key", EnvironmentVariableTarget.User);
+        chatGPTConnection = new ChatGPTConnection(api_key);
+        //load?J?n
+        loading.Start_load();
+        //??????????“_??
+        await chatGPTConnection.RequestAsync("Œê‚è‚¾‚µ‚ğŒê‚Á‚Ä‚­‚¾‚³‚¢B");
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        // æ¬¡ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒãªã„å ´åˆã¯å…¥åŠ›ãƒœã‚¿ãƒ³ã‚’ã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒ†ã‚£ãƒ–ã«ã™ã‚‹
+        // Ÿ‚ÌƒƒbƒZ[ƒW‚ª‚È‚¢ê‡‚Í“ü—Íƒ{ƒ^ƒ“‚ğƒCƒ“ƒ^ƒ‰ƒNƒeƒBƒu‚É‚·‚é
         if (futureMessages.Count == 0)
 		{
             inputButtonc.interactable = true;
 		}
 
-        // ãƒ†ã‚­ã‚¹ãƒˆã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å®Œäº†ã—ãŸã‚‰Autoã®ã‚¿ã‚¤ãƒãƒ¼ç¨¼åƒ
+        // ƒeƒLƒXƒg‚ÌƒAƒjƒ[ƒVƒ‡ƒ“Š®—¹‚µ‚½‚çAuto‚Ìƒ^ƒCƒ}[‰Ò“­
 		if (isEndTextAnim & autoMode)
 		{
             autoTimer += Time.deltaTime;
@@ -74,7 +99,7 @@ public class MessageManager : MonoBehaviour
 			}
         }
 
-        // ãƒ†ã‚­ã‚¹ãƒˆã‚’ä¸€æ–‡å­—ãšã¤é †ç•ªã«è¡¨ç¤ºã•ã›ã‚‹
+        // ƒeƒLƒXƒg‚ğˆê•¶š‚¸‚Â‡”Ô‚É•\¦‚³‚¹‚é
         if(!isEndTextAnim)
 		{
             textAnimTimer += Time.deltaTime;
@@ -87,27 +112,27 @@ public class MessageManager : MonoBehaviour
 
     public void DisplayNextMessage()
 	{
-        //ã¾ã ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ä¸­ãªã‚‰è¡¨ç¤ºã‚’å®Œäº†ã™ã‚‹
+        //‚Ü‚¾ƒAƒjƒ[ƒVƒ‡ƒ“’†‚È‚ç•\¦‚ğŠ®—¹‚·‚é
         if(! isEndTextAnim)
 		{
             textAnimTimer = fullMessage.Length * textAnimSpeed;
             return;
         }
 
-        //æ¬¡ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒæœªæ±ºå®šã®å ´åˆã¯ãªã«ã‚‚ã—ãªã„
+        //Ÿ‚ÌƒƒbƒZ[ƒW‚ª–¢Œˆ’è‚Ìê‡‚Í‚È‚É‚à‚µ‚È‚¢
         if (futureMessages.Count == 0)
             return;
 
-        //æ–°ã—ã„ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã«å¤‰æ›´
+        //V‚µ‚¢ƒƒbƒZ[ƒW‚É•ÏX
 
         textAnimTimer = 0;
         isEndTextAnim = false;
-        //æ¬¡ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’ãƒªã‚¹ãƒˆã‹ã‚‰å–ã‚Šå‡ºã—ã¦æ›´æ–°
+        //Ÿ‚ÌƒƒbƒZ[ƒW‚ğƒŠƒXƒg‚©‚çæ‚èo‚µ‚ÄXV
         MessageData md = futureMessages[0];
         futureMessages.RemoveAt(0);
         namec.text = md.author;
         fullMessage = md.message;
-        //å±¥æ­´ã«è¿½åŠ 
+        //—š—ğ‚É’Ç‰Á
         History.list.Add(md);
         logManager.Add(md);
 	}
@@ -124,17 +149,17 @@ public class MessageManager : MonoBehaviour
 		}
 	}
 
-    public void EnterInputScreen()
+    public async void EnterInputScreen()
 	{
-        // å…¥åŠ›ã®æ±ºå®šãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚ŒãŸã‚‰å‘¼ã°ã‚Œã‚‹
-
+        // “ü—Í‚ÌŒˆ’èƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚çŒÄ‚Î‚ê‚é
+        
         SetMessage(new MessageData(author: "You", message: inputFieldc.text));
         inputFieldc.text = "";
 
-        // ã“ã“ã§ inputField.text ã‚’ChatGPTã«é€ã‚‹
-
-
-
+        // ‚±‚±‚Å inputField.text ‚ğChatGPT‚É‘—‚é
+       
+        loading.Start_load();
+        await chatGPTConnection.RequestAsync(inputFieldc.text);
 
         inputScreen.SetActive(false);
         inputButtonc.interactable = false;
