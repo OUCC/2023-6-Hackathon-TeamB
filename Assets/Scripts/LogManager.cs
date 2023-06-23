@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class LogManager : MonoBehaviour
 {
 
+    public GameObject logScrollView;
     public GameObject parentContent;
     public GameObject LogUnitPrefab;
     private RectTransform parentT;
@@ -45,4 +46,13 @@ public class LogManager : MonoBehaviour
 
         top.SetLocalPositionAndRotation(new Vector3(parentT.rect.width/2, -logUnitHeight, 0),Quaternion.identity);
     }
+
+    public void ShowLogView()
+	{
+        logScrollView.SetActive(true);
+	}
+    public void HideLogView()
+	{
+        logScrollView.SetActive(false);
+	}
 }
