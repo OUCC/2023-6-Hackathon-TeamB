@@ -18,7 +18,7 @@ public class MessageData
 	public string ToString()
 	{
 		if (author.Length > 0)
-			return author + "「" + message + "」";
+			return author + "：" + message;
 		else
 			//地の文
 			return message;

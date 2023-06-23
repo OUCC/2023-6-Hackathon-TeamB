@@ -10,10 +10,12 @@ public static class History
 
 	public static void PrintLog()
 	{
+		string str = "";
 		foreach (var data in list)
 		{
-			Debug.Log(data.ToString());
+			str+=data.ToString()+"\n";
 		}
+		Debug.Log(str);
 	}
 	
 }

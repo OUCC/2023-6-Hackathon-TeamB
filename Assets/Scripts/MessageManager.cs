@@ -31,6 +31,7 @@ public class MessageManager : MonoBehaviour
     private bool isEndTextAnim = false;
 
     //デバッグ用
+    public bool PrintHistoryToLog;
     
     //apikey
     string api_key;
@@ -102,6 +103,13 @@ public class MessageManager : MonoBehaviour
             messagec.text = fullMessage.Substring(0, Mathf.Min(fullMessage.Length, dispTextNum));
             isEndTextAnim = fullMessage.Length < dispTextNum;
         }
+
+        // 会話履歴のログ出力
+        if (PrintHistoryToLog)
+        {
+            PrintHistoryToLog = false;
+            History.PrintLog();
+        }
     }
 
 
@@ -152,11 +160,11 @@ public class MessageManager : MonoBehaviour
         message = message.Replace("「", "|「");
         message = message.Replace("」", "」|");
         message = message.Replace("\n", "|");
-        //message = message.Replace("、", "、|");
         message = message.Replace("。", "。|");
+        message = message.Replace("|」|", "」|");
         message = message.Replace("||", "|");
 
-		foreach (string part in message.Split("|"))
+		foreach (string part in message.Split("|",StringSplitOptions.RemoveEmptyEntries))
 		{
             SetMessage(new MessageData(author,part));
 		}
@@ -178,10 +186,6 @@ public class MessageManager : MonoBehaviour
         inputFieldc.text = "";
     }
 
-    public void PrintHistoryToLog()
-	{
-        History.PrintLog();
-	}
 
     public void HideInputScreen()
 	{
