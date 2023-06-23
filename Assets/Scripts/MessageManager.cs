@@ -9,11 +9,13 @@ public class MessageManager : MonoBehaviour
 
     public GameObject nameTextObject;
     public GameObject messageTextObject;
-    public GameObject InputScreen;
+    public GameObject inputScreen;
+    public GameObject inputButton;
 
     private Text namec;
     private Text messagec;
     private LogManager logManager;
+    private Button inputButtonc;
 
     // Auto用
     public bool autoMode;
@@ -42,6 +44,7 @@ public class MessageManager : MonoBehaviour
         //logManager = transform.GetComponent<LogManager>();
 
         inputFieldc = inputField.GetComponent<InputField>();
+        inputButtonc = inputButton.GetComponent<Button>();
 
         // デバッグ用のメッセージ
         futureMessages.Add(new MessageData("A", "aaa"));
@@ -49,23 +52,21 @@ public class MessageManager : MonoBehaviour
         futureMessages.Add(new MessageData("C", "ccccccccccccccc"));
         futureMessages.Add(new MessageData("D", "dddddddddddddddddddddd"));
         futureMessages.Add(new MessageData("E", "eeeeeeeeeeeeeeeeeeeeeeeeeeeee"));
-        futureMessages.Add(new MessageData("A", "aaa"));
-        futureMessages.Add(new MessageData("B", "bbbbbbb"));
-        futureMessages.Add(new MessageData("C", "ccccccccccccccc"));
-        futureMessages.Add(new MessageData("D", "dddddddddddddddddddddd"));
-        futureMessages.Add(new MessageData("E", "eeeeeeeeeeeeeeeeeeeeeeeeeeeee"));
-        futureMessages.Add(new MessageData("A", "aaa"));
-        futureMessages.Add(new MessageData("B", "bbbbbbb"));
-        futureMessages.Add(new MessageData("C", "ccccccccccccccc"));
-        futureMessages.Add(new MessageData("D", "dddddddddddddddddddddd"));
-        futureMessages.Add(new MessageData("E", "eeeeeeeeeeeeeeeeeeeeeeeeeeeee"));
 
+
+        DisplayNextMessage();
     }
 
 
     // Update is called once per frame
     void Update()
     {
+        // 次のメッセージがない場合は入力ボタンをインタラクティブにする
+        if (futureMessages.Count == 0)
+		{
+            inputButtonc.interactable = true;
+		}
+
         // テキストのアニメーション完了したらAutoのタイマー稼働
 		if (isEndTextAnim & autoMode)
 		{
@@ -127,27 +128,33 @@ public class MessageManager : MonoBehaviour
 		}
 	}
 
-    public void OnInputButtonClick()
+    public void EnterInputScreen()
 	{
         // 入力の決定ボタンが押されたら呼ばれる
 
-        SetMessage(new MessageData(author: "B", message: inputFieldc.text));
+        SetMessage(new MessageData(author: "You", message: inputFieldc.text));
 
         // ここで inputField.text をChatGPTに送る
-	}
 
-    public void OnShowHistoryButton()
+
+
+
+        inputScreen.SetActive(false);
+        inputButtonc.interactable = false;
+    }
+
+    public void PrintHistoryToLog()
 	{
         History.PrintLog();
 	}
 
-    public void OnHideInputFieldButtonClick()
+    public void HideInputScreen()
 	{
-        InputScreen.SetActive(false);
+        inputScreen.SetActive(false);
 	}
-    public void OnShowInputFieldButtonClick()
+    public void ShowInputScreen()
 	{
-        InputScreen.SetActive(true);
+        inputScreen.SetActive(true);
 	}
     public void ToggleAutoMode()
 	{
