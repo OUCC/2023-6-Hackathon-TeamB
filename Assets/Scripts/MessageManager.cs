@@ -59,15 +59,10 @@ public class MessageManager : MonoBehaviour
         inputFieldc = inputField.GetComponent<InputField>();
         inputButtonc = inputButton.GetComponent<Button>();
 
-        // デバッグ用のメッセージ
-        futureMessages.Add(new MessageData("説明", "　　　　　　　　　　　　　　↑\nAUTOボタンをクリックするとAUTOモードになり、\n表示アニメーション終了後1秒で次に移ります。"));
-        futureMessages.Add(new MessageData("説明", "　　　　　　　　　　　　　　　　　↑\nLOGボタンをクリックするとこれまでの会話の履歴が表示され、右上の?で戻ります。"));
 
-        // ?f?o?b?O?p????b?Z?[?W
-        futureMessages.Add(new MessageData("A", "aaa"));
-        futureMessages.Add(new MessageData("B", "bbbbbbb"));
-        futureMessages.Add(new MessageData("C", "ccccccccccccccc"));
-        futureMessages.Add(new MessageData("D", "dddddddddddddddddddddd"));
+        futureMessages.Add(new MessageData("説明", "AUTOボタンをクリックするとAUTOモードになり、表示アニメーション終了後1秒で次に移ります。"));
+        futureMessages.Add(new MessageData("説明", "LOGボタンをクリックするとこれまでの会話の履歴が表示され、右上のXで戻ります。"));
+
        
         //?????????o??
         api_key = Environment.GetEnvironmentVariable("API_key", EnvironmentVariableTarget.User);
@@ -149,12 +144,29 @@ public class MessageManager : MonoBehaviour
 		}
 	}
 
+    public void AddFullText(string author,string message)
+	{
+        // 区切り文字
+        if (message.StartsWith("「") && message.EndsWith("」"))
+            message = message.Remove(0, 1).Remove(message.Length - 1, 1);
+        message = message.Replace("「", "|「");
+        message = message.Replace("」", "」|");
+        message = message.Replace("\n", "|");
+        //message = message.Replace("、", "、|");
+        message = message.Replace("。", "。|");
+        message = message.Replace("||", "|");
+
+		foreach (string part in message.Split("|"))
+		{
+            SetMessage(new MessageData(author,part));
+		}
+	}
+
     public async void EnterInputScreen()
 	{
         // 入力の決定ボタンが押されたら呼ばれる
         
         SetMessage(new MessageData(author: "You", message: inputFieldc.text));
-        inputFieldc.text = "";
 
         // ここで inputField.text をChatGPTに送る
        
@@ -163,6 +175,7 @@ public class MessageManager : MonoBehaviour
 
         inputScreen.SetActive(false);
         inputButtonc.interactable = false;
+        inputFieldc.text = "";
     }
 
     public void PrintHistoryToLog()

@@ -51,87 +51,90 @@ public class ChatGPTResponseModel
 }
 
 
-    public class ChatGPTConnection
-    {
-        //Text text;
-        private readonly string _apiKey;
-        public List<ChatGPTMessageModel> _messageList = new();
-        
+public class ChatGPTConnection
+{
+	//Text text;
+	private readonly string _apiKey;
+	public List<ChatGPTMessageModel> _messageList = new();
 
-       
-        
-        public ChatGPTConnection(string apiKey)
-        {
-            
-            _apiKey = apiKey;
-            _messageList.Add(
-                new ChatGPTMessageModel() { role = "system", content = "あなたは物語の語り手です。「"+TitleSingleton.instance.title+"」という作品を創作し、語ってください。また、次の条件を守ってください。" +
-                "条件１：会話ごとに相手に選択をゆだねてください。" +
-                "条件２：相手の返答によって物語に変化を加えてください。" });
-            
-        }
+	MessageManager _mmanager;
 
-        public async UniTask<ChatGPTResponseModel> RequestAsync(string userMessage)
-        {
-            //���͐���AI��API�̃G���h�|�C���g��ݒ�
-            var apiUrl = "https://api.openai.com/v1/chat/completions";
 
-            _messageList.Add(new ChatGPTMessageModel { role = "user", content = userMessage });
+	public ChatGPTConnection(string apiKey)
+	{
+		_mmanager = GameObject.Find("Manager").GetComponent<MessageManager>();
+		_apiKey = apiKey;
+		_messageList.Add(
+			new ChatGPTMessageModel()
+			{
+				role = "system",
+				content = "あなたは物語の語り手です。「" + TitleSingleton.instance.title + "」という作品を創作し、語ってください。また、次の条件を守ってください。" +
+			"条件１：会話ごとに相手に選択をゆだねてください。" +
+			"条件２：相手の返答によって物語に変化を加えてください。"
+			});
 
-            //OpenAI��API���N�G�X�g�ɕK�v�ȃw�b�_�[����ݒ�
-            var headers = new Dictionary<string, string>
-            {
-                {"Authorization", "Bearer " + _apiKey},
-                {"Content-type", "application/json"},
-                {"X-Slack-No-Retry", "1"}
-            };
+	}
 
-            //���͐����ŗ��p���郂�f����g�[�N������A�v�����v�g���I�v�V�����ɐݒ�
-            var options = new ChatGPTCompletionRequestModel()
-            {
-                model = "gpt-3.5-turbo",
-                messages = _messageList
-            };
-            var jsonOptions = JsonUtility.ToJson(options);
+	public async UniTask<ChatGPTResponseModel> RequestAsync(string userMessage)
+	{
+		//���͐���AI��API�̃G���h�|�C���g��ݒ�
+		var apiUrl = "https://api.openai.com/v1/chat/completions";
 
-            Debug.Log("自分:" + userMessage);
+		_messageList.Add(new ChatGPTMessageModel { role = "user", content = userMessage });
 
-            //OpenAI�̕��͐���(Completion)��API���N�G�X�g�𑗂�A���ʂ�ϐ��Ɋi�[
-            using var request = new UnityWebRequest(apiUrl, "POST")
-            {
-                uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(jsonOptions)),
-                downloadHandler = new DownloadHandlerBuffer()
-            };
+		//OpenAI��API���N�G�X�g�ɕK�v�ȃw�b�_�[����ݒ�
+		var headers = new Dictionary<string, string>
+			{
+				{"Authorization", "Bearer " + _apiKey},
+				{"Content-type", "application/json"},
+				{"X-Slack-No-Retry", "1"}
+			};
 
-            foreach (var header in headers)
-            {
-                request.SetRequestHeader(header.Key, header.Value);
-            }
+		//���͐����ŗ��p���郂�f����g�[�N������A�v�����v�g���I�v�V�����ɐݒ�
+		var options = new ChatGPTCompletionRequestModel()
+		{
+			model = "gpt-3.5-turbo",
+			messages = _messageList
+		};
+		var jsonOptions = JsonUtility.ToJson(options);
 
-            await request.SendWebRequest();
+		Debug.Log("自分:" + userMessage);
 
-            if (request.result == UnityWebRequest.Result.ConnectionError ||
-                request.result == UnityWebRequest.Result.ProtocolError)
-            {
-                Debug.LogError(request.error);
-                throw new Exception();
-            }
-            else
-            {
-                var responseString = request.downloadHandler.text;
-                var responseObject = JsonUtility.FromJson<ChatGPTResponseModel>(responseString);
+		//OpenAI�̕��͐���(Completion)��API���N�G�X�g�𑗂�A���ʂ�ϐ��Ɋi�[
+		using var request = new UnityWebRequest(apiUrl, "POST")
+		{
+			uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(jsonOptions)),
+			downloadHandler = new DownloadHandlerBuffer()
+		};
 
-                Debug.Log("ChatGPT:" + responseObject.choices[0].message.content);
-            
-            // 返答を これから表示するリスト に追加する
-            GameObject.Find("Manager").GetComponent<MessageManager>().futureMessages
-                    .Add(new MessageData(author:"ChatGPT",message:responseObject.choices[0].message.content));
+		foreach (var header in headers)
+		{
+			request.SetRequestHeader(header.Key, header.Value);
+		}
 
-                
-                GameObject.Find("systemText").GetComponent<System_text>().idol();
-                _messageList.Add(responseObject.choices[0].message);
-                
-                return responseObject;
-            }
-        }
-    }
+		await request.SendWebRequest();
+
+		if (request.result == UnityWebRequest.Result.ConnectionError ||
+			request.result == UnityWebRequest.Result.ProtocolError)
+		{
+			Debug.LogError(request.error);
+			throw new Exception();
+		}
+		else
+		{
+			var responseString = request.downloadHandler.text;
+			var responseObject = JsonUtility.FromJson<ChatGPTResponseModel>(responseString);
+
+			Debug.Log("ChatGPT:" + responseObject.choices[0].message.content);
+
+			// 返答を これから表示するリスト に追加する
+			_mmanager.AddFullText(author: "ChatGPT", message: responseObject.choices[0].message.content);
+
+
+			GameObject.Find("systemText").GetComponent<System_text>().idol();
+			_messageList.Add(responseObject.choices[0].message);
+
+			return responseObject;
+		}
+	}
+}
