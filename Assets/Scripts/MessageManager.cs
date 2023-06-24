@@ -56,10 +56,10 @@ public class MessageManager : MonoBehaviour
         inputFieldc = inputField.GetComponent<InputField>();
 
         // デバッグ用のメッセージ
-        futureMessages.Add(new MessageData("A", "aaa"));
+        /*futureMessages.Add(new MessageData("A", "aaa"));
         futureMessages.Add(new MessageData("B", "bbbbbbb"));
         futureMessages.Add(new MessageData("C", "ccccccccccccccc"));
-        futureMessages.Add(new MessageData("D", "dddddddddddddddddddddd"));
+        futureMessages.Add(new MessageData("D", "dddddddddddddddddddddd"));*/
        
         //環境変数読み出し
         api_key = Environment.GetEnvironmentVariable("API_key", EnvironmentVariableTarget.User);
@@ -141,7 +141,7 @@ public class MessageManager : MonoBehaviour
 	{
         // 入力の決定ボタンが押されたら呼ばれる
 
-        SetMessage(new MessageData(author: "B", message: inputFieldc.text));
+        //SetMessage(new MessageData(author: "B", message: inputFieldc.text));
         
         // ここで inputField.text をChatGPTに送る
        

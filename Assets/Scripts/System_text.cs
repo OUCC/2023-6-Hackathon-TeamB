@@ -10,7 +10,7 @@ public class System_text : MonoBehaviour
 {
     public InputField legacyField;  
     public Text legacySystemText;
-
+    MessageManager messageManager;
     
 
     
@@ -21,6 +21,7 @@ public class System_text : MonoBehaviour
     void Start()
     {
         loading = GameObject.Find("LoadingCanvas").GetComponent<Loading>();
+        messageManager = GameObject.Find("TextManager").GetComponent<MessageManager>();
         legacySystemText.text = "にゅうりょくしていいよ";
               
     }
@@ -37,6 +38,7 @@ public class System_text : MonoBehaviour
         loading.Finish_load();
         legacySystemText.text = "にゅうりょくしていいよ";
         GameObject.Find("Input_screen").SetActive(false);
+        messageManager.DisplayNextMessage();
     }
    
 }
