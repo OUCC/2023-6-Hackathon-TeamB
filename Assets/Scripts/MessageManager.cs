@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.EventSystems;
 using Microsoft.Win32;
 
 
@@ -30,9 +31,9 @@ public class MessageManager : MonoBehaviour
 
     //apikey
     string api_key;
-
-
-
+    [SerializeField] private EventSystem eventSystem;
+    private GameObject button_ob;
+    SelectBotton sb;
     //loading‰æ–Ê—p
     Loading loading;
     
@@ -149,6 +150,17 @@ public class MessageManager : MonoBehaviour
 
         loading.Start_load();
 
+    }
+
+    public void OnSwitch()
+    {
+        
+        button_ob = eventSystem.currentSelectedGameObject;
+        sb = button_ob.GetComponent<SelectBotton>();
+       
+        chatGPTConnection.RequestAsync(sb.number.ToString());
+
+        loading.Start_load();
     }
 
     public void OnShowHistoryButton()

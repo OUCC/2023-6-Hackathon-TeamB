@@ -37,7 +37,7 @@ public class System_text : MonoBehaviour
         //load終了
         loading.Finish_load();
         legacySystemText.text = "にゅうりょくしていいよ";
-        GameObject.Find("Input_screen").SetActive(false);
+        //GameObject.Find("Input_screen").SetActive(false);
         messageManager.DisplayNextMessage();
     }
    
