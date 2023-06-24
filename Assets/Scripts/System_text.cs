@@ -10,19 +10,11 @@ public class System_text : MonoBehaviour
 {
     public InputField legacyField;  
     public Text legacySystemText;
-<<<<<<< Updated upstream
-    string api_key;
+
     
 
-    void Start()
-    {
-        //��b������ێ����郊�X�g
-        /*var cc = new ChatGPTConnection();
-        cc._messageList = new();*/
-        legacySystemText.text = "にゅうりょくしていいよ";
-        
-        
-=======
+    
+
     //load用のクラス　他のに統合できそうな気もする
     Loading loading;
 
@@ -30,8 +22,7 @@ public class System_text : MonoBehaviour
     {
         loading = GameObject.Find("LoadingCanvas").GetComponent<Loading>();
         legacySystemText.text = "にゅうりょくしていいよ";
-               
->>>>>>> Stashed changes
+              
     }
     
     public void OnEndEdit()
@@ -45,6 +36,7 @@ public class System_text : MonoBehaviour
         //load終了
         loading.Finish_load();
         legacySystemText.text = "にゅうりょくしていいよ";
+        GameObject.Find("Input_screen").SetActive(false);
     }
    
 }

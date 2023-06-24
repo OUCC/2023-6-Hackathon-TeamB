@@ -30,14 +30,12 @@ public class MessageManager : MonoBehaviour
 
     //apikey
     string api_key;
-<<<<<<< Updated upstream
 
-    //
-=======
+
+
     //loading画面用
     Loading loading;
     
->>>>>>> Stashed changes
     ChatGPTConnection chatGPTConnection;
     //デバッグ用
     public GameObject inputField;
@@ -67,12 +65,11 @@ public class MessageManager : MonoBehaviour
         api_key = Environment.GetEnvironmentVariable("API_key", EnvironmentVariableTarget.User);
         chatGPTConnection = new ChatGPTConnection(api_key);
         //語りだしを先に語らせる
-        chatGPTConnection.RequestAsync("語りだしを語ってください");
-<<<<<<< Updated upstream
-=======
+        chatGPTConnection.RequestAsync("語りだしを語り、選択肢を提示してください");
+
         //load開始
         loading.Start_load();
->>>>>>> Stashed changes
+
     }
 
 
@@ -149,10 +146,9 @@ public class MessageManager : MonoBehaviour
         // ここで inputField.text をChatGPTに送る
        
         chatGPTConnection.RequestAsync(inputFieldc.text);
-<<<<<<< Updated upstream
-=======
+
         loading.Start_load();
->>>>>>> Stashed changes
+
     }
 
     public void OnShowHistoryButton()

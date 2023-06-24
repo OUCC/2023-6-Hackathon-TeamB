@@ -55,33 +55,22 @@ public class ChatGPTResponseModel
     {
         //Text text;
         private readonly string _apiKey;
-<<<<<<< Updated upstream
+
     public List<ChatGPTMessageModel> _messageList = new();
-
-
-        string test;
-=======
-        public List<ChatGPTMessageModel> _messageList = new();
-        
-
-       
->>>>>>> Stashed changes
-        
         public ChatGPTConnection(string apiKey)
         {
             
             _apiKey = apiKey;
             _messageList.Add(
-<<<<<<< Updated upstream
-                new ChatGPTMessageModel() { role = "system", content = "あなたは物語の語り手です。「"+ TitleSingleton.Instance.title+"」という作品を創作し、語りだしを語ってください。また、次の条件を守ってください。" +
-                "条件１：会話ごとに相手に選択をゆだねてください。" +
-                "条件２：相手の返答によって物語に変化を加えてください。" });
-=======
-                new ChatGPTMessageModel() { role = "system", content = "あなたは物語の語り手です。「"+ TitleSingleton.Instance.title+"」という作品を創作し、語ってください。また、次の条件を守ってください。" +
-                "条件１：会話ごとに相手に選択をゆだねてください。" +
-                "条件２：相手の返答によって物語に変化を加えてください。" });
+
+                new ChatGPTMessageModel() { role = "system", content = "あなたは物語の語り手です。「"+ TitleSingleton.Instance.title+"」というタイトルの学校が舞台の作品を創作し、語ってください。また、次の条件を守ってください。" +
+                "条件１：返答時に相手に三つの選択肢を提示してください。" +
+                "条件２：相手が選んだ選択肢によって物語に変化を加えてください。" +
+                "条件３：五回会話を交わした後、物語を終わらせてください。" +
+                "条件４：コードブロックの中ではゲームの出力のみを行ってください。"
+                });
             
->>>>>>> Stashed changes
+
         }
 
         public async UniTask<ChatGPTResponseModel> RequestAsync(string userMessage)
